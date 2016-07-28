@@ -58,7 +58,9 @@
   }
   .msgbox-close-container .msgbox-close {
     top: 10px;
-    opacity: .5;
+    opacity: 0.2;
+    color: #000;
+    font-size: 18px;
   }
 
   .msgbox-content {
@@ -79,6 +81,10 @@
     text-align: center;
     z-index: 1; 
     font-weight: bold;    
+  }
+
+  .msgbox-close:hover{
+    opacity: 0.5;
   }
 
   .msgbox-input > input {
