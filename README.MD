@@ -10,12 +10,10 @@ Get source from npm.
 $ npm install vue-msgbox --save
 ```
 
-Supported UMD library and individual CSS file.
-
 ```bash
-./lib/
+./dist/
 ├── vue-msgbox.js
-└── vue-msgbox.css
+└── vue-msgbox.js.map
 ./src/
 ├── index.js
 └── msgbox.vue
@@ -25,21 +23,9 @@ Supported UMD library and individual CSS file.
 // For ES6 module
 import MessageBox from 'vue-msgbox';
 
-// For commonJS
-const MessageBox = require('vue-msgbox').default;
-
-// For global variable, import from script label, then
-const MessageBox = VueMsgbox.default;
-
-// Import from src code for debugging or self building
-import MessageBox from 'vue-msgbox/src';
+// Import all-in-one file from dist
+import MessageBox from 'vue-msgbox/dist/vue-msgbox.js';
 ```
-
-And import CSS file: 
-```javascript
-require('vue-msgbox/lib/vue-msgbox.css');
-```
-
 # Usage
 
 ## Basic usage
@@ -147,12 +133,6 @@ Coding with watching and hot-reload.
 
 ```bash
 $ npm run dev
-```
-
-Develop on real remote device.
-
-```bash
-$ npm run remote-dev {{ YOUR IP ADDRESS }}
 ```
 
 # License
