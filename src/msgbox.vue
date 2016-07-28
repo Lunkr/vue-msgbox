@@ -9,7 +9,7 @@
         <span class="msgbox-close" @click="handleAction('close')">×</span>
       </div>
       <div class="msgbox-content" v-if="message">
-        <div class="msgbox-message">{{ message }}</div>
+        <div class="msgbox-message">{{{ message }}}</div>
         <div class="msgbox-input" v-show="showInput">
           <input type="text" v-model="inputValue" :placeholder="inputPlaceholder" v-el:input />
           <div class="msgbox-errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{editorErrorMessage}}</div>
