@@ -2,12 +2,12 @@
   "name": "vue-msgbox",
   "version": "0.2.11",
   "description": "A message box (like Sweet Alert) for vue.js.",
-  "main": "lib/vue-msgbox.js",
+  "main": "src/index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "webpack --config webpack/dev.js",
     "dev": "webpack-dev-server --config ./webpack.example.config.js --inline --hot",
-    "remote-dev": "webpack-dev-server --config ./webpack.example.config.js --inline --hot --host",
-    "build": "webpack -p",
-    "prepublish": "webpack -p"
+    "build": "rm -rf dist && webpack --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "author": "long.zhang@ele.me",
   "license": "MIT",
   "devDependencies": {
+    "vue": "^1.0.26",
     "babel-cli": "^6.3.15",
     "babel-core": "^6.3.15",
     "babel-loader": "^6.2.0",
@@ -40,6 +41,9 @@
     "vue-loader": "^7.3.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
+  },
+  "peerDependencies": {
+    "vue": "^1.0.26"
   },
   "dependencies": {
     "vue-popup": "^0.1.8"

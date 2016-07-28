@@ -3,10 +3,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var options = require('./webpack.base.js');
 options.entry = './src';
 options.output = {
-  library: 'VueMsgbox',
-  libraryTarget: 'umd',
-  filename: 'vue-msgbox.js',
-  path: './lib'
+    path: './dist',
+    filename: 'vue-msgbox.js',
+    libraryTarget: 'commonjs'
 };
 options.externals = {
   vue: {
@@ -16,6 +15,5 @@ options.externals = {
     amd: 'vue'
   }
 };
-options.plugins = [new ExtractTextPlugin('vue-msgbox.css')];
-options.vue.loaders.css = ExtractTextPlugin.extract('style', 'css');
+options.devtool = '#source-map'
 module.exports = options;

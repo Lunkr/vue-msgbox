@@ -1,65 +1,84 @@
 <template>
   <div class="msgbox-wrapper">
     <div class="msgbox" v-if="rendered" v-show="visible" transition="pop-bounce">
-      <div class="msgbox-header" v-if="title !== ''">
-        <div class="msgbox-title">{{ title }}</div>
-        <!--<div class="msgbox-close d-icon icon-close" @click="handleAction('close')"></div>-->
+      <div class="msgbox-header" v-if="title">
+        <span class="msgbox-title">{{ title }}</span>
+        <span class="msgbox-close" @click="handleAction('close')">×</span>
       </div>
-      <div class="msgbox-content" v-if="message !== ''">
-        <div class="msgbox-status d-icon {{ type ? 'icon-' + type : '' }}"></div>
-        <div class="msgbox-message"><p>{{ message }}</p></div>
+      <div class="msgbox-close-container" v-else>
+        <span class="msgbox-close" @click="handleAction('close')">×</span>
+      </div>
+      <div class="msgbox-content" v-if="message">
+        <div class="msgbox-message">{{ message }}</div>
         <div class="msgbox-input" v-show="showInput">
           <input type="text" v-model="inputValue" :placeholder="inputPlaceholder" v-el:input />
           <div class="msgbox-errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{editorErrorMessage}}</div>
         </div>
       </div>
       <div class="msgbox-btns" :class="{ 'msgbox-btns-reverse': confirmButtonPosition === 'left' }">
-        <button class="{{ cancelButtonClasses }}" v-show="showCancelButton" @click="handleAction('cancel')">{{ cancelButtonText }}</button>
         <button class="{{ confirmButtonClasses }}" v-show="showConfirmButton" @click="handleAction('confirm')">{{ confirmButtonText }}</button>
+        <button class="{{ cancelButtonClasses }}" v-show="showCancelButton" @click="handleAction('cancel')">{{ cancelButtonText }}</button>        
       </div>
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
+  .msgbox-wrapper {
+    box-sizing: border-box;
+  }
   .msgbox {
     position: fixed;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
     background-color: #fff;
-    width: 85%;
-    border-radius: 3px;
-    font-size: 16px;
+    width: 300px;
+    border-radius: 5px;
+    font-size: 14px;
     -webkit-user-select: none;
     overflow: hidden;
     opacity: 1;
     backface-visibility: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
   }
 
   .msgbox-header{
-    padding: 15px 20px 5px 10px;
-    border-bottom: 1px solid #ddd;
+    background-color: #424242;
+    padding: 0 15px;
+    overflow: hidden;
+    position: relative;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+  }
+  .msgbox-close-container{
+    height: 20px;
+  }
+  .msgbox-close-container .msgbox-close {
+    top: 10px;
+    opacity: .5;
   }
 
   .msgbox-content {
     padding: 10px 20px;
     min-height: 36px;
     position: relative;
-    border-bottom: 1px solid #ddd;
   }
 
   .msgbox-close {
     display: inline-block;
     position: absolute;
-    top: 14px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
     width: 20px;
     height: 20px;
     cursor: pointer;
     line-height: 20px;
     text-align: center;
+    z-index: 1; 
+    font-weight: bold;    
   }
 
   .msgbox-input > input {
@@ -77,14 +96,6 @@
     color: red;
     font-size: 12px;
     min-height: 16px;
-  }
-
-  .msgbox-title {
-    padding-left: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
   }
 
   .msgbox-status {
@@ -108,47 +119,76 @@
 
   .msgbox-message {
     color: #333;
-    font-size: 16px;
-    line-height: 36px;
-    margin-left: 36px;
-    margin-right: 36px;
+    text-overflow: ellipsis;
+    margin: 20px 0 30px 0;
     text-align: center;
+    line-height: 20px;
   }
 
   .msgbox-btns {
     display: flex;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    font-size: 16px;
+    padding: 20px 0;
+    justify-content: center;
   }
 
   .msgbox-btn {
-    display: block;
-    background-color: #fff;
-    border: 0;
-    flex: 1;
-    margin: 0;
-    border-radius: 0;
+    border-radius: 4px;
+    min-width: 50px;
+    height: 26px;
+    padding: 0 10px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 5px;
+    border: 1px solid #e0e0e0;    
   }
-
+  .msgbox-btn:focus,
+  .msgbox-btn:hover,
   .msgbox-btn:active {
-    background-color: #3492e9;
-    color: #fff;
-    outline: none;
+    outline: none !important;
   }
-
-  .msgbox-btn:focus {
-    outline: none;
+  .msgbox-btn:hover {
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.1);
   }
-
+  .msgbox-btn:active {
+    box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.1);
+  }
   .msgbox-confirm {
-    width: 50%;
+    background-color: #ffee38;
+    color: #7c6506;
+    border: 1px solid #cdbc06;
   }
-
+  .msgbox-confirm:hover,
+  .msgbox-confirm:active,
+  .msgbox-confirm:active:hover,
+  .msgbox-confirm:active:focus,
+  .msgbox-confirm:focus {
+    background-color: #ffee38;
+    color: #7c6506;
+    border: 1px solid #cdbc06;
+  }
+  .msgbox-confirm.disabled,
+  .msgbox-confirm[disabled] {
+    background-color: #f5f5f5;
+    color: #c1c1c1;
+  }
+  .msgbox-confirm.disabled:hover,
+  .msgbox-confirm[disabled]:hover,
+  .msgbox-confirm.disabled:active,
+  .msgbox-confirm[disabled]:active {
+    box-shadow: none;
+    background-color: #f5f5f5;
+    color: #c1c1c1;
+  }
   .msgbox-cancel {
-    width: 50%;
-    border-right: 1px solid #ddd;
+    background-color: #f5f5f5;
+    color: #606060;
+  }
+  .msgbox-cancel:hover,
+  .msgbox-cancel:active,
+  .msgbox-cancel:focus {
+    background-color: #f5f5f5;
+    color: #606060;
   }
 
   .msgbox-confirm-highlight,
@@ -158,14 +198,6 @@
 
   .msgbox-btns-reverse {
     -webkit-box-direction: reverse;
-  }
-
-  .msgbox-btns-reverse .msgbox-confirm {
-    border-right: 1px solid #ddd;
-  }
-
-  .msgbox-btns-reverse .msgbox-cancel {
-    border-right: 0;
   }
 
   .pop-bounce-transition {
@@ -184,7 +216,7 @@
 </style>
 <style src="vue-popup/lib/popup.css"></style>
 
-<script type="text/ecmascript-6" lang="babel">
+<script lang="babel">
   var CONFIRM_TEXT = '确定';
   var CANCEL_TEXT = '取消';
 

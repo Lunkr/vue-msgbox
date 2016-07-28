@@ -5,4 +5,7 @@ options.output = {
   filename: './example/dist/build.js',
   publicPath: '/'
 };
+options.devServer = {
+  port: 4000
+}
 module.exports = options;
