@@ -55,10 +55,11 @@ var initInstance = function() {
     if (currentMsg) {
       var callback = currentMsg.callback;
       if (typeof callback === 'function') {
+        var result = action === 'confirm';
         if (instance.showInput) {
-          callback(instance.inputValue, action);
+          callback(instance.inputValue, result);
         } else {
-          callback(action);
+          callback(result);
         }
       }
       if (currentMsg.resolve) {
@@ -66,12 +67,12 @@ var initInstance = function() {
         if ($type === 'confirm' || $type === 'prompt') {
           if (action === 'confirm') {
             if (instance.showInput) {
-              currentMsg.resolve({ value: instance.inputValue, action });
+              currentMsg.resolve({ value: instance.inputValue, result: true });
             } else {
-              currentMsg.resolve(action);
+              currentMsg.resolve(true);
             }
-          } else if (action === 'cancel' && currentMsg.reject) {
-            currentMsg.reject(action);
+          } else if (action === 'cancel') {
+            currentMsg.resolve(false);
           }
         } else {
           currentMsg.resolve(action);

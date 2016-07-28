@@ -42,9 +42,9 @@ MessageBox({
   message: 'I\'m a message',
   type: 'success',
   showCancelButton: true
-}, function(action) {
-  console.log('callback:', action);
-  MessageBox('Clicked: ' + action);
+}, function(result) {
+  console.log('callback:', result);
+  MessageBox('Clicked: ' + result);
 });
 ```
 
@@ -58,9 +58,9 @@ MessageBox({
   message: 'I\'m a message',
   type: 'success',
   showCancelButton: true
-}).then(function(action) {
-  console.log('callback:', action);
-  MessageBox('Clicked: ' + action);
+}).then(function(result) {
+  console.log('callback:', result);
+  MessageBox('Clicked: ' + result);
 });
 ```
 
@@ -71,7 +71,7 @@ MessageBox.alert(message, title, options);
 ```
 
 ```JavaScript
-MessageBox.alert('message').then(function(action) {
+MessageBox.alert('message').then(function(result) {
   ...
 });
 ```
@@ -85,7 +85,7 @@ MessageBox.confirm(message, title, options);
 ```
 
 ```JavaScript
-MessageBox.confirm('message').then(function(action) {
+MessageBox.confirm('message').then(function(result) {
   ...
 });
 ```
@@ -99,7 +99,7 @@ MessageBox.prompt(message, title, options);
 ```
 
 ```JavaScript
-MessageBox.prompt('message').then(function(value, action) {
+MessageBox.prompt('message').then(function(value, result) {
   ...
 });
 ```
