@@ -23,6 +23,7 @@ var defaults = {
 };
 
 import Vue from 'vue';
+import {Promise} from 'es6-promise';
 import msgboxVue from './msgbox.vue';
 
 var merge = function(target) {
@@ -121,25 +122,16 @@ var MessageBox = function(options, callback) {
     callback = options.callback;
   }
 
-  if (typeof Promise !== 'undefined') {
-    return new Promise(function (resolve, reject) {
-      msgQueue.push({
-        options: merge({}, defaults, MessageBox.defaults || {}, options),
-        callback: callback,
-        resolve: resolve,
-        reject: reject
-      });
-
-      showNextMsg();
-    });
-  } else {
+  return new Promise(function (resolve, reject) {
     msgQueue.push({
       options: merge({}, defaults, MessageBox.defaults || {}, options),
-      callback: callback
+      callback: callback,
+      resolve: resolve,
+      reject: reject
     });
 
     showNextMsg();
-  }
+  });
 };
 
 MessageBox.setDefaults = function(defaults) {
