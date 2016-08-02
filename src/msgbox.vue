@@ -237,6 +237,9 @@
       },
       closeOnPressEscape: {
         default: true
+      },
+      zIndex: {
+        default: 1040
       }
     },
 
