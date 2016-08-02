@@ -220,7 +220,6 @@
     transform: translate3d(-50%, -50%, 0) scale(0.9);
   }
 </style>
-<style src="vue-popup/lib/popup.css"></style>
 
 <script lang="babel">
   var CONFIRM_TEXT = '确定';
