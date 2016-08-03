@@ -238,7 +238,7 @@
         default: true
       },
       zIndex: {
-        default: 1040
+        default: 1050
       }
     },
 
