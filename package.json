@@ -47,6 +47,6 @@
   },
   "dependencies": {
     "es6-promise": "^3.2.1",
-    "vue-popup": "git+https://github.com/Lunkr/vue-popup.git#82bfb96"
+    "vue-popup": "^0.1.9"
   }
 }
