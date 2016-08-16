@@ -11,7 +11,7 @@
       <div class="msgbox-content" v-if="message">
         <div class="msgbox-message">{{{ message }}}</div>
         <div class="msgbox-input" v-show="showInput">
-          <input type="text" v-model="inputValue" :placeholder="inputPlaceholder" v-el:input />
+          <input type="{{ inputType }}" v-model="inputValue" :placeholder="inputPlaceholder" v-el:input />
           <div class="msgbox-errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{editorErrorMessage}}</div>
         </div>
       </div>
@@ -99,9 +99,10 @@
   }
 
   .msgbox-errormsg {
-    color: red;
+    color:#ff7043;
     font-size: 12px;
     min-height: 16px;
+    padding: 5px 0 0 5px;
   }
 
   .msgbox-status {
@@ -261,10 +262,18 @@
 
     methods: {
       handleAction(action) {
-        if (this.$type === 'prompt' && action === 'confirm' && !this.validate()) {
-          return;
-        }
         var callback = this.callback;
+        if (this.$type === 'prompt' && action === 'confirm') {
+          if(!this.validate()) {
+            return;
+          } else {
+            var result = callback(this.inputValue, action);
+            if(result) {
+              this.editorErrorMessage = result;
+              return;
+            }
+          } 
+        }
         this.visible = false;
         callback(action);
       },
@@ -319,6 +328,7 @@
         type: '',
         showInput: false,
         inputValue: null,
+        inputType: 'text',
         inputPlaceholder: '',
         inputPattern: null,
         inputValidator: null,

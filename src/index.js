@@ -7,6 +7,7 @@ var defaults = {
   type: '',
   showInput: false,
   inputValue: null,
+  inputType: 'text',
   inputPlaceholder: '',
   inputPattern: null,
   inputValidator: null,
